@@ -5,7 +5,7 @@ get:
   description: Obtener los datos de la cuenta de Crédito.
   operationId: echo
   security:
-    - bearerAuth: []
+    - Authorization: []
   responses:
     '200':
       description: OK
