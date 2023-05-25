@@ -26,6 +26,10 @@ get:
               value: 'Hello world!'
     '401':
       description: Unauthorized
-      examples:
+      content:
+        application/json:
+          schema:
+            type: string
+          examples:
             response:
               value: 'Hello world!'
