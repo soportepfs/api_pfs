@@ -25,9 +25,7 @@ get:
       schema:
         type: boolean
   security:
-    - main_auth:
-        - read:users
-    - api_key: []
+    - bearerAuth: []
   responses:
     '200':
       description: Success
