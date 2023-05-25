@@ -26,3 +26,6 @@ get:
               value: 'Hello world!'
     '401':
       description: Unauthorized
+      examples:
+            response:
+              value: 'Hello world!'
