@@ -32,7 +32,7 @@ servers:
   - url: https://{tenant}/api/v1
     variables:
       tenant:
-        default: www
+        default: ap1.pfsmx.app
         description: Your tenant id
   - url: https://ap1.pfsmx.app/api/v1
 paths:
