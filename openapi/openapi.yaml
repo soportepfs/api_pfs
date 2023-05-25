@@ -37,8 +37,6 @@ servers:
   - url: https://example.com/api/v1
 paths:
   /profile:
-    $ref: paths/profile.yaml
-  /echo:
     $ref: paths/echo.yaml
   /pathItem:
     $ref: paths/pathItem.yaml
