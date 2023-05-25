@@ -20,7 +20,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/Schema.yaml
+            $ref: ../components/schemas/respiesta_profile.yaml
     '401':
-      description: Forbidden
-      $ref: ../components/responses/Problem.yaml
+      description: Unauthorized
+      $ref: ../components/responses/Unauthorized.yaml
