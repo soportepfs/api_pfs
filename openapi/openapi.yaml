@@ -24,8 +24,8 @@ info:
 tags:
   - name: Autentificación
     description: Se requiere un Token de Autentificación Bearer obtenido del Portal de Crédito de PFS. Este Token se deberá agregar en un Header para su autorización.
-  - name: User
-    description: Operations about users.
+  - name: Perfil
+    description: Operaciones acerca de la cuenta de Crédito.
   - name: Tag
     description: This is a tag description.
 servers:
@@ -36,8 +36,8 @@ servers:
         description: Your tenant id
   - url: https://example.com/api/v1
 paths:
-  /users/{username}:
-    $ref: paths/users_{username}.yaml
+  /profile/:
+    $ref: paths/profile.yaml
   /echo:
     $ref: paths/echo.yaml
   /pathItem:
