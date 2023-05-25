@@ -23,9 +23,12 @@ get:
             type: string
           examples:
             response:
-              value: ok
+              value: 'Hello world!'
     '401':
       description: Unauthorized
-          description: OK
-          examples:
-            application/json: { "Message": "Error de autentificación" }
+      examples:
+            application/json:
+              id: 38
+              title: T-shirt
+              image:
+                url: images/38.png
