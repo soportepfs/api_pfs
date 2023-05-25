@@ -6,8 +6,7 @@ post:
     Operation description **Markdown**.
   operationId: operationId
   security:
-    - api_key: []
-    - basic_auth: []
+    - bearerAuth: []
   requestBody:
     content:
       application/json:
