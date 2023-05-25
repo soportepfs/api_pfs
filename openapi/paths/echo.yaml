@@ -25,11 +25,4 @@ get:
             response:
               value: 'Hello world!'
     '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            type: string
-          examples:
-            response:
-              value: 'Hello world!'
+      $ref: ../components/responses/Unauthorized.yaml
