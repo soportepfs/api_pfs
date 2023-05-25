@@ -1,6 +1,6 @@
 get:
   tags:
-    - Echo
+    - Perfil
   summary: Echo test
   description: Receive the exact message you've sent
   operationId: echo
