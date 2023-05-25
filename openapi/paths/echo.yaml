@@ -23,6 +23,8 @@ get:
             type: string
           examples:
             response:
-              value: '{"Message":"Error de autentificaci\u00f3n"}'
+              value: '{
+    "Message": "Error de autentificación"
+}'
     '401':
       description: Unauthorized
