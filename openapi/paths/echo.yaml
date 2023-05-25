@@ -27,6 +27,7 @@ get:
     '401':
       description: Unauthorized
       examples:
+        response:
             application/json:
               id: 38
               title: T-shirt
