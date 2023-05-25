@@ -24,11 +24,5 @@ get:
           examples:
             response:
               value: Hello world!
-        application/xml:
-          schema:
-            type: string
-        text/csv:
-          schema:
-            type: string
     '401':
       description: Unauthorized
