@@ -22,7 +22,7 @@ info:
 
 
 tags:
-  - name: Echo
+  - name: Autentificación
     description: Example echo operations.
   - name: User
     description: Operations about users.
@@ -47,7 +47,7 @@ paths:
 components:
   securitySchemes:
     main_auth:
-      type: oauth2
+      type: bearer
       flows:
         implicit:
           authorizationUrl: http://example.com/api/oauth/dialog
