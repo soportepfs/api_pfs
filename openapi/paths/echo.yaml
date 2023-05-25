@@ -30,12 +30,5 @@ get:
         text/csv:
           schema:
             type: string
-    '400':
+    '401':
       description: Unauthorized
-  x-codeSamples:
-    - lang: C#
-      source:
-        $ref: ../code_samples/C_sharp/echo/post.cs
-    - lang: PHP
-      source:
-        $ref: ../code_samples/PHP/echo/post.php
