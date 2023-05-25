@@ -6,8 +6,7 @@ post:
     Operation description **markdown**.
   operationId: postPathItemWithExamples
   security:
-    - api_key: []
-    - basic_auth: []
+    - bearerAuth: []
   requestBody:
     content:
       application/json:
