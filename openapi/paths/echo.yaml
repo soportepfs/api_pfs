@@ -28,4 +28,4 @@ get:
       description: Unauthorized
           description: OK
           examples:
-            application/json: { "Message": Error de autentificación }
+            application/json: { "Message": "Error de autentificación" }
