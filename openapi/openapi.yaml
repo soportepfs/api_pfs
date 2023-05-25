@@ -29,12 +29,12 @@ tags:
   - name: Tag
     description: This is a tag description.
 servers:
-  - url: https://{tenant}/api/v1
+  - url: https://ap1.pfsmx.app/api/v1
     variables:
       tenant:
         default: www
         description: Your tenant id
-  - url: https://example.com/api/v1
+  - url: https://ap1.pfsmx.app/api/v1
 paths:
   /profile:
     $ref: paths/echo.yaml
