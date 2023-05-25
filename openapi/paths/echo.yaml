@@ -25,4 +25,5 @@ get:
             response:
               value: 'Hello world!'
     '401':
-      $ref: ../components/responses/Unauthorized.yaml
+      description: Forbidden
+      $ref: ../components/responses/Problem.yaml
