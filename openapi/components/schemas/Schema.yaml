@@ -2,7 +2,7 @@ type: object
 title: Scalars
 properties:
   CLIENTE:
-    description: Property name's description (type is string)
+    description: Número de Cliente PFS
     type: string
     examples:
       - 55017
