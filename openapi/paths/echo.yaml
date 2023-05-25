@@ -23,8 +23,9 @@ get:
             type: string
           examples:
             response:
-              value: '{
-    "Message": "Error de autentificación"
-}'
+              value: ok
     '401':
       description: Unauthorized
+          description: OK
+          examples:
+            application/json: { "Message": Error de autentificación }
