@@ -47,7 +47,7 @@ paths:
 components:
   securitySchemes:
     main_auth:
-      type: bearer
+      type: oauth2
       flows:
         implicit:
           authorizationUrl: http://example.com/api/oauth/dialog
