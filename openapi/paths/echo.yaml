@@ -6,6 +6,7 @@ get:
   operationId: echo
   security:
     - api_key: []
+    - basic_auth: []
   responses:
     '200':
       description: OK
