@@ -22,5 +22,5 @@ get:
           schema:
             $ref: ../components/schemas/respiesta_profile.yaml
     '401':
-      description: Unauthorized
+      Message: Error de autentificación
       $ref: ../components/responses/Unauthorized.yaml
