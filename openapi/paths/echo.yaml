@@ -26,10 +26,3 @@ get:
               value: 'Hello world!'
     '401':
       description: Unauthorized
-      examples:
-        response:
-            application/json:
-              id: 38
-              title: T-shirt
-              image:
-                url: images/38.png
