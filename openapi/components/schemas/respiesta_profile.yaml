@@ -1,0 +1,9 @@
+type: object
+title: Scalars
+properties:
+  CLIENTE:
+    description: Property name's description (type is string)
+    type: string
+    examples:
+      - 55017
+
