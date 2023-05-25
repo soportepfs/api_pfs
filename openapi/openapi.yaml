@@ -23,8 +23,7 @@ info:
 
 tags:
   - name: Autentificación
-    description: Se requiere un Token de Autentificación Bearer obtenido del Portal de Crédito de PFS.
-    Este Token se deberá agregar en un Header para su autorización.
+    description: Se requiere un Token de Autentificación Bearer obtenido del Portal de Crédito de PFS. Este Token se deberá agregar en un Header para su autorización.
   - name: User
     description: Operations about users.
   - name: Tag
