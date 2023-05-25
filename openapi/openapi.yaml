@@ -56,3 +56,6 @@ components:
       type: apiKey
       in: header
       name: api_key
+    basic_auth:
+      type: http
+      scheme: basic
