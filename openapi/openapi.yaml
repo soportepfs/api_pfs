@@ -34,7 +34,7 @@ servers:
       tenant:
         default: www
         description: Your tenant id
-  - url: https://ap1.pfsmx.app/api/v1
+  - url: https://example.com/api/v1
 paths:
   /profile:
     $ref: paths/echo.yaml
