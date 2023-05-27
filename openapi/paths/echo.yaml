@@ -20,7 +20,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/respiesta_profile.yaml
+            $ref: ../components/schemas/respuesta_profile.yaml
     '401':
       Message: Error de autentificación
       $ref: ../components/responses/Unauthorized.yaml
