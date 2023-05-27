@@ -20,7 +20,7 @@ properties:
     description: Nombre de cliente (Representante Legal)
     type: string
     examples:
-      - JORGE
+      - JORGE ALEJANDRO
       PATERNO:
     description: Apellido Paterno de cliente (Representante Legal)
     type: string
