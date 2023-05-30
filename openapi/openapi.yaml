@@ -1,13 +1,7 @@
 openapi: 3.1.0
 info:
-  version: 1.0.0
   title: API PFS
-  contact:
-    email: web@fletesdelsur.com
-    url: https://fletesdelsur.com/
-  x-logo:
-    url: https://redocly.github.io/openapi-template/logo.png
-  description: >
+  description: |-
     API para la generación y consulta de Guías de Crédito
 
     # Alcances y limitantes
@@ -19,30 +13,661 @@ info:
       - Guías con confirmación 
       - Confirmar Guía
       - Cancelar Guía sin confirmar
-
-
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: web@fletesdelsur.com
+    url: https://fletesdelsur.com
+  version: 1.0.1
+servers:
+  - url: http://ap1.pfsmx.app/api/v1
 tags:
   - name: Autentificación
     description: Se requiere un Token de Autentificación Bearer obtenido del Portal de Crédito de PFS. Este Token se deberá agregar en un Header para su autorización.
   - name: Perfil
     description: Operaciones acerca de la cuenta de Crédito.
-  - name: Tag
-    description: This is a tag description.
-servers:
-  - url: https://{tenant}/api/v1
-    variables:
-      tenant:
-        default: ap1.pfsmx.app
-        description: Your tenant id
-  - url: https://ap1.pfsmx.app/api/v1
+  - name: Cobertura
+    description: Operaciones acerca de la cobertura en un Código Postal.
+  - name: Cotizador
+    description: Operaciones acerca del Cotizador.
+  - name: Envíos
+    description: Operaciones acerca de Envíos.
+  - name: Firma
+    description: Operaciones acerca de firma de comprobante de entrega.
 paths:
+  /firma/:
+    get:
+      tags:
+        - Firma
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getFirma
+      parameters:
+        - name: guia
+          in: path
+          description: Id Guia
+          required: true
+          example: 55F3A53B-21BD-4D86-B0CA-2DC7BC209E2D
+          schema:
+            type: string
+        - name: tipo
+          in: path
+          description: Tipo Firma
+          required: true
+          example: base64
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+  /envio/:
+    post:
+      tags:
+        - Envíos
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: postCotizador
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Envio_Post'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []  
+    put:
+      tags:
+        - Envíos
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: putCotizador
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Envio_Put'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: [] 
+    delete:
+      tags:
+        - Envíos
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: deleteCotizador
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Envio_Put'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: [] 
+
+
+  /envio/{guia}:
+    get:
+      tags:
+        - Envíos
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getEnvio
+      parameters:
+        - name: guia
+          in: path
+          description: Guía
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+
+  /envio/?fecha_ini={fecha_ini}&fecha_fin={fecha_fin}&page={page}:
+    get:
+      tags:
+        - Envíos
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getEnviofecha
+      parameters:
+        - name: fecha_ini
+          in: path
+          description: Guía
+          required: true
+          example: 2023-05-01
+          schema:
+            type: string
+        - name: fecha_fin
+          in: path
+          description: Guía
+          required: true
+          example: 2023-05-31
+          schema:
+            type: string
+        - name: page
+          in: path
+          description: Guía
+          required: true
+          example: 0
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+
+
+
   /profile:
-    $ref: paths/echo.yaml
-  /pathItem:
-    $ref: paths/pathItem.yaml
-  /pathItemWithExamples:
-    $ref: paths/pathItemWithExamples.yaml
+    get:
+      tags:
+        - Perfil
+      summary: Regresa la información correspondiente a la cuenta de crédito
+      description: Regresa la información correspondiente a la cuenta de crédito
+      operationId: getInventory
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+  /cobertura/{cp}:
+    get:
+      tags:
+        - Cobertura
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getInventorys
+      parameters:
+        - name: cp
+          in: path
+          description: Código Postal
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+        
+        
+  /cotizador/:
+    get:
+      tags:
+        - Cotizador
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getCotizador
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []     
+        
+    post:
+      tags:
+        - Cotizador
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: postCotizadorf
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cotizador'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []  
+        
+  /cotizador/&filtro={Parametro}:
+    get:
+      tags:
+        - Cotizador
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getCotizadorf
+      parameters:
+        - name: Parametro
+          in: path
+          description: Filtro de charola
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []  
+        
+        
+        
+  /cotizador/{politica_venta}:
+    get:
+      tags:
+        - Cotizador
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getCotizadorpol
+      parameters:
+        - name: politica_venta
+          in: path
+          description: Politica de Venta
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+        
+  /cotizador/{politica_venta}&filtro={Parametro}:
+    get:
+      tags:
+        - Cotizador
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getCotizadorpolf
+      parameters:
+        - name: politica_venta
+          in: path
+          description: Politica de Venta
+          required: true
+          schema:
+            type: integer
+        - name: Parametro
+          in: path
+          description: Filtro de charola
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
+
 components:
+  schemas:
+    Direccion:
+      type: object
+      properties:
+        Calle:
+          type: string
+          example: JURHIATA
+        NumExt:
+          type: string
+          example: 5
+        NumInt:
+          type: string
+          example:
+        CP:
+          type: integer
+          format: int64
+          example: 60190 
+        IdentificadorColonia:
+          type: integer
+          format: int64
+          example: 74560
+      xml:
+        name: address
+    Envio:
+      type: object
+      properties:
+        Tipo:
+          type: string
+          example: CREDITO-API
+        Confirmacion:
+          type: boolean
+          example: true
+        Servicio:
+          type: string
+          example: DOM
+        Recoleccion:
+          type: boolean
+          example: false
+        Seguro:
+          type: boolean
+          example: true
+        CantidadPaquetes:
+          type: integer
+          format: int64
+          example: 3
+        Observaciones:
+          type: string
+          example: Observaciones Prueba
+      xml:
+        name: envio
+    Paquetes:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Paquete'
+    Paquete:
+      type: object
+      properties:
+        IdentificadorRango:
+          type: integer
+          format: int64
+          example: 0
+        Cantidad:
+          type: integer
+          format: int64
+          example: 1
+        Largo:
+          type: number
+          example: 30.0
+        Alto:
+          type: number
+          example: 20.0
+        Ancho:
+          type: number
+          example: 15.0
+        PesoUnitario:
+          type: number
+          example: 3.0
+        Contenido:
+          type: string
+          example: Zapatos
+        ClaveProductoSAT:
+          type: string
+          example: 01010101
+        ClaveClaveUnidadSATProductoSAT:
+          type: string
+          example: X4G
+        ValorDeclaradoUnitario:
+          type: number
+          example: 1.0
+      xml:
+        name: paquete
+    Remitente:
+      type: object
+      properties:
+        Cliente:
+          type: integer
+          format: int64
+          example: -1
+        Nombre:
+          type: string
+          example: JUAN ALBERTO MIRELES MADRIGAL
+        Rfc:
+          type: string
+          example: MIMJ9109018J1
+        Telefono:
+          type: string
+          example: 4521125002
+        Mail:
+          type: string
+          example: zorek.bd@gmail.com
+        Direccion:
+          $ref: '#/components/schemas/Direccion'
+      xml:
+        name: remitente
+    Destinatario:
+      type: object
+      properties:
+        Cliente:
+          type: integer
+          format: int64
+          example: -1
+        Nombre:
+          type: string
+          example: JUAN ALBERTO MIRELES MADRIGAL
+        Rfc:
+          type: string
+          example: MIMJ9109018J1
+        Telefono:
+          type: string
+          example: 4521125002
+        Mail:
+          type: string
+          example: zorek.bd@gmail.com
+        Direccion:
+          $ref: '#/components/schemas/Direccion'
+      xml:
+        name: destinatario
+    Profile:
+      type: object
+      properties:
+        CLIENTE:
+          type: integer
+          format: int64
+          example: 55017
+
+          
+    Envio_Put:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 9E1A1338-650E-47C1-9B3B-045CCE577B21
+          
+    Cotizador:
+      type: object
+      properties:
+        Cantidad:
+          type: integer
+          format: int64
+          example: 1
+        Largo:
+          type: number
+          example: 30.0
+        Alto:
+          type: number
+          example: 20.0
+        Ancho:
+          type: number
+          example: 15.0
+        Peso:
+          type: number
+          example: 3.0
+
+    Envio_Post:
+      type: object
+      properties:
+        Envio:
+          $ref: '#/components/schemas/Envio'
+        Paquetes:
+          $ref: '#/components/schemas/Paquetes'
+        Remitente:
+          $ref: '#/components/schemas/Remitente'
+        Destinatario:
+          $ref: '#/components/schemas/Destinatario'
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  requestBodies:
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Profile'
   securitySchemes:
     Authorization:            # arbitrary name for the security scheme
       type: http
