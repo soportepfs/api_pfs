@@ -189,21 +189,21 @@ paths:
       operationId: getEnviofecha
       parameters:
         - name: fecha_ini
-          in: path
+          in: query
           description: Guía
           required: true
           example: 2023-05-01
           schema:
             type: string
         - name: fecha_fin
-          in: path
+          in: query
           description: Guía
           required: true
           example: 2023-05-31
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           description: Guía
           required: true
           example: 0
@@ -341,7 +341,7 @@ paths:
       security:
         - Authorization: []  
         
-  /cotizador/&filtro={Parametro}:
+  /cotizador?filtro={Parametro}:
     get:
       tags:
         - Cotizador
@@ -349,8 +349,8 @@ paths:
       description: Regresa la información correspondiente al Código Postal ingresado
       operationId: getCotizadorf
       parameters:
-        - name: Parametro
-          in: path
+        - name: filtro
+          in: query
           description: Filtro de charola
           required: true
           schema:
@@ -407,7 +407,7 @@ paths:
       security:
         - Authorization: []
         
-  /cotizador/{politica_venta}&filtro={Parametro}:
+  /cotizador/{politica_venta}?filtro={Parametro}:
     get:
       tags:
         - Cotizador
@@ -421,8 +421,8 @@ paths:
           required: true
           schema:
             type: integer
-        - name: Parametro
-          in: path
+        - name: filtro
+          in: query
           description: Filtro de charola
           required: true
           schema:
