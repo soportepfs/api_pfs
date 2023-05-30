@@ -180,7 +180,7 @@ paths:
       security:
         - Authorization: []
 
-  /envio?fecha_ini={fecha_ini}&fecha_fin={fecha_fin}&page={page}:
+  /envio?fecha_ini=2023-05-01&fecha_fin=2023-05-31&page=0:
     get:
       tags:
         - Envíos
@@ -341,7 +341,7 @@ paths:
       security:
         - Authorization: []  
         
-  /cotizador?filtro={Parametro}:
+  /cotizador?filtro=caja:
     get:
       tags:
         - Cotizador
@@ -407,7 +407,7 @@ paths:
       security:
         - Authorization: []
         
-  /cotizador/{politica_venta}?filtro={Parametro}:
+  /cotizador/{politica_venta}?filtro=caja:
     get:
       tags:
         - Cotizador
