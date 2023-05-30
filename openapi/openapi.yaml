@@ -146,41 +146,6 @@ paths:
                 example: Error de autentificación
       security:
         - Authorization: [] 
-
-
-  /envio/{guia}:
-    get:
-      tags:
-        - Envíos
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
-      operationId: getEnvio
-      parameters:
-        - name: guia
-          in: path
-          description: Guía
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Profile'          
-        '401':
-          description: Error de autentificación
-          content:
-            application/json:
-              schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
-      security:
-        - Authorization: []
-
-  /envio?fecha_ini=2023-05-01&fecha_fin=2023-05-31&page=0:
     get:
       tags:
         - Envíos
@@ -228,7 +193,37 @@ paths:
         - Authorization: []
 
 
-
+  /envio/{guia}:
+    get:
+      tags:
+        - Envíos
+      summary: Regresa la información correspondiente al Código Postal ingresado
+      description: Regresa la información correspondiente al Código Postal ingresado
+      operationId: getEnvio
+      parameters:
+        - name: guia
+          in: path
+          description: Guía
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: Error de autentificación
+      security:
+        - Authorization: []
   /profile:
     get:
       tags:
@@ -293,6 +288,13 @@ paths:
       summary: Regresa la información correspondiente al Código Postal ingresado
       description: Regresa la información correspondiente al Código Postal ingresado
       operationId: getCotizador
+      parameters:
+        - name: filtro
+          in: query
+          description: Filtro de charola
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: successful operation
@@ -341,40 +343,7 @@ paths:
       security:
         - Authorization: []  
         
-  /cotizador?filtro=caja:
-    get:
-      tags:
-        - Cotizador
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
-      operationId: getCotizadorf
-      parameters:
-        - name: filtro
-          in: query
-          description: Filtro de charola
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Profile'          
-        '401':
-          description: Error de autentificación
-          content:
-            application/json:
-              schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
-      security:
-        - Authorization: []  
-        
-        
-        
+
   /cotizador/{politica_venta}:
     get:
       tags:
@@ -389,38 +358,6 @@ paths:
           required: true
           schema:
             type: integer
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Profile'          
-        '401':
-          description: Error de autentificación
-          content:
-            application/json:
-              schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
-      security:
-        - Authorization: []
-        
-  /cotizador/{politica_venta}?filtro=caja:
-    get:
-      tags:
-        - Cotizador
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
-      operationId: getCotizadorpolf
-      parameters:
-        - name: politica_venta
-          in: path
-          description: Politica de Venta
-          required: true
-          schema:
-            type: integer
         - name: filtro
           in: query
           description: Filtro de charola
@@ -444,6 +381,7 @@ paths:
                 example: Error de autentificación
       security:
         - Authorization: []
+   
 
 components:
   schemas:
