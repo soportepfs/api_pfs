@@ -34,28 +34,13 @@ tags:
   - name: Firma
     description: Operaciones acerca de firma de comprobante de entrega.
 paths:
-  /firma/:
+  /firma:
     get:
       tags:
         - Firma
       summary: Regresa la información correspondiente al Código Postal ingresado
       description: Regresa la información correspondiente al Código Postal ingresado
       operationId: getFirma
-      parameters:
-        - name: guia
-          in: path
-          description: Id Guia
-          required: true
-          example: 55F3A53B-21BD-4D86-B0CA-2DC7BC209E2D
-          schema:
-            type: string
-        - name: tipo
-          in: path
-          description: Tipo Firma
-          required: true
-          example: base64
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -73,7 +58,7 @@ paths:
                 example: Error de autentificación
       security:
         - Authorization: []
-  /envio/:
+  /envio:
     post:
       tags:
         - Envíos
@@ -195,7 +180,7 @@ paths:
       security:
         - Authorization: []
 
-  /envio/?fecha_ini={fecha_ini}&fecha_fin={fecha_fin}&page={page}:
+  /envio?fecha_ini={fecha_ini}&fecha_fin={fecha_fin}&page={page}:
     get:
       tags:
         - Envíos
@@ -301,7 +286,7 @@ paths:
         - Authorization: []
         
         
-  /cotizador/:
+  /cotizador:
     get:
       tags:
         - Cotizador
@@ -647,27 +632,7 @@ components:
           $ref: '#/components/schemas/Remitente'
         Destinatario:
           $ref: '#/components/schemas/Destinatario'
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
-      xml:
-        name: '##default'
-  requestBodies:
-    UserArray:
-      description: List of user object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Profile'
+
   securitySchemes:
     Authorization:            # arbitrary name for the security scheme
       type: http
