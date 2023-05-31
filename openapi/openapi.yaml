@@ -34,28 +34,41 @@ tags:
   - name: Firma
     description: Operaciones acerca de firma de comprobante de entrega.
 paths:
-  /firma:
+  /firma/{UUID}:
     get:
       tags:
         - Firma
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Obtener la firma de un envío entregado
+      description: Obtener la firma de un envío entregado
       operationId: getFirma
+      parameters:
+        - name: UUID
+          in: patch
+          description: Guía
+          required: true
+          example: 55F3A53B-21BD-4D86-B0CA-2DC7BC209E2D
+          schema:
+            type: string
+        - name: tipo
+          in: query
+          description: Tipo de resultado
+          required: true
+          example: base64
+          schema:
+            type: string
       responses:
         '200':
-          description: successful operation
+          description: Consulta exitosa
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/Firma'
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'
       security:
         - Authorization: []
   /envio:
@@ -72,20 +85,24 @@ paths:
             schema:
               $ref: '#/components/schemas/Envio_Post'
       responses:
-        '200':
-          description: successful operation
+        '201':
+          description: Respuesta de Envío con Confirmación
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/Envio_Confirmacion'     
+        '200':
+          description: Respuesta de Envío sin Confirmación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio_Sin_Confirmacion' 
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []  
     put:
@@ -106,15 +123,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/Envio_Sin_Confirmacion' 
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: [] 
     delete:
@@ -130,20 +145,18 @@ paths:
             schema:
               $ref: '#/components/schemas/Envio_Put'
       responses:
-        '200':
+        '410':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/EnvioCancelado'          
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: [] 
     get:
@@ -186,9 +199,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []
 
@@ -219,9 +230,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []
   /profile:
@@ -243,9 +252,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []
   /cobertura/{cp}:
@@ -254,7 +261,7 @@ paths:
         - Cobertura
       summary: Regresa la información correspondiente al Código Postal ingresado
       description: Regresa la información correspondiente al Código Postal ingresado
-      operationId: getInventorys
+      operationId: getCobertura
       parameters:
         - name: cp
           in: path
@@ -268,15 +275,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/Cobertura'          
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []
         
@@ -301,15 +306,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/RCotizador'          
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []     
         
@@ -331,15 +334,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/RCotizadorA'
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []  
         
@@ -370,15 +371,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Profile'          
+                $ref: '#/components/schemas/RCotizador'          
         '401':
           description: Error de autentificación
           content:
             application/json:
               schema:
-                type: object
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: Error de autentificación
+                $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []
    
@@ -440,6 +439,41 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/Paquete'
+    Rangos:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Rango'
+
+    Rango:
+      type: object
+      properties:
+        IdentificadorRango:
+          type: integer
+          format: int64
+          example: 1250
+        Rango:
+          type: string
+          example: APARATOS DE EJERCICIO
+        Importe:
+          type: number
+          example: 3448.2700
+        Largo:
+          type: number
+          example: 180
+        Alto:
+          type: number
+          example: 180
+        Ancho:
+          type: number
+          example: 180
+        Peso:
+          type: number
+          example: 100
+      xml:
+        name: paquete
+
     Paquete:
       type: object
       properties:
@@ -477,6 +511,33 @@ components:
           example: 1.0
       xml:
         name: paquete
+    Colonias:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Colonia'
+    Colonia:
+      type: object
+      properties:
+        Identificador:
+          type: integer
+          format: int64
+          example: 74555
+        Colonia:
+          type: string
+          example: Zumpimito
+        EntregaDomicilio:
+          type: boolean
+          example: true
+        CostoExtra:
+          type: number
+          example: 0.0
+        EntregaOtraPaqueteria:
+          type: boolean
+          example: false
+      xml:
+        name: colonia
     Remitente:
       type: object
       properties:
@@ -530,15 +591,103 @@ components:
           type: integer
           format: int64
           example: 55017
+        RAZON_SOCIAL:
+          type: string
+          example: EMPRESA DEMO
+        ST_PERS_FISICA:
+          type: boolean
+          example: false
+        NOMBRES:
+          type: string
+          example: JORGE
+        PATERNO:
+          type: string
+          example: CENDEJAS
+        MATERNO:
+          type: string
+          example: FLORES
+        RFC:
+          type: string
+          example: PFS030605UN7
+        REGIMEN_FISCAL:
+          type: string
+          example: 601
+        CALLE:
+          type: string
+          example: REVOLUCION
+        NUMERO:
+          type: string
+          example: 83
+        NOEXT:
+          type: string
+          example: 
+        CP:
+          type: integer
+          format: int64
+          example: 61760
+        COLONIA:
+          type: string
+          example: LIBERTAD
+        MUNICIPIO:
+          type: string
+          example: MúGICA
+        ESTADO:
+          type: string
+          example: MICHOACáN DE OCAMPO
+        TELEFONO:
+          type: string
+          example: 4521000473
+        MAIL:
+          type: string
+          example: jcendejas@fletesdelsur.com
+        POLITICA_VENTA:
+          type: integer
+          format: int64
+          example: 0
+        ST_COBRAR_DOM:
+          type: boolean
+          example: true
+        ST_COBRAR_FXC:
+          type: boolean
+          example: true
+        ST_COBRAR_EXTENDIDA:
+          type: boolean
+          example: true
 
-          
+
+    Firma:
+      type: object
+      properties:
+        Firma:
+          type: string
+          example: iVBORw0KGgoAAAANSUhEUgAAAfQAAAEkCAYAAADZ6MOlAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAABleSURBVHic7d1rcFT...
     Envio_Put:
       type: object
       properties:
         id:
           type: string
           example: 9E1A1338-650E-47C1-9B3B-045CCE577B21
-          
+    Error_Auth:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: Error de autentificación
+
+
+    EnvioCancelado:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: Envío cancelado correctamente
+
+
+
+
+
+
+
     Cotizador:
       type: object
       properties:
@@ -571,6 +720,113 @@ components:
         Destinatario:
           $ref: '#/components/schemas/Destinatario'
 
+    Cobertura:
+      type: object
+      properties:
+        Cobertura:
+          type: boolean
+          example: true
+        Municipio:
+          type: string
+          example: Uruapan
+        Estado:
+          type: string
+          example: Michoacán de Ocampo
+        Destino_Recibe:
+          type: string
+          example: URUAPAN, MICH.
+        Oficina_Recibe:
+          type: string
+          example: URUAPAN AMERICAS
+        FXC:
+          type: boolean
+          example: true
+        Ocurre:
+          type: boolean
+          example: true
+        Colonias:
+          $ref: '#/components/schemas/Colonias'
+
+    RCotizador:
+      type: object
+      properties:
+        Politica:
+          type: string
+          example: GENERAL
+        Rangos:
+          $ref: '#/components/schemas/Rangos'
+
+    RCotizadorA:
+      type: object
+      properties:
+        Cantidad:
+          type: integer
+          format: int64
+          example: 1
+        Costo:
+          type: number
+          example: 136.50
+        KilosRango:
+          type: number
+          example: 12.5
+        KilosExtra:
+          type: number
+          example: 0
+        CostoKiloExtra:
+          type: number
+          example: 7
+        ImporteKilosExtra:
+          type: number
+          example: 0
+        Subtotal:
+          type: number
+          example: 136.5
+        Importe:
+          type: number
+          example: 136.5
+        Obs:
+          type: string
+          example: El Importe no incluye I.V.A.
+
+    Envio_Confirmacion:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 88DFBE7A-C60C-4926-9CE7-476D0B3FAD3A
+        Subtotal:
+          type: number
+          example: 646.5
+        IVA:
+          type: number
+          example: 103.44
+        Retencion:
+          type: number
+          example: 0
+        Total:
+          type: number
+          example: 749.94
+        Seguro:
+          type: number
+          example: 20
+        Flete:
+          type: number
+          example: 526.5
+        RecDom:
+          type: number
+          example: 50
+        EntDom:
+          type: number
+          example: 50
+        Saldo:
+          type: number
+          example: 749.94
+    Envio_Sin_Confirmacion:
+      type: object
+      properties:
+        Guia:
+          type: number
+          example: 2969249
   securitySchemes:
     Authorization:            # arbitrary name for the security scheme
       type: http
