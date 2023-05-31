@@ -43,7 +43,7 @@ paths:
       operationId: getFirma
       parameters:
         - name: UUID
-          in: patch
+          in: path
           description: Guía
           required: true
           example: 55F3A53B-21BD-4D86-B0CA-2DC7BC209E2D
