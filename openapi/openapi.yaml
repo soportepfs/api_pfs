@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: API PFS
   description: |-
@@ -6,20 +6,20 @@ info:
 
     # Alcances y limitantes
 
-    Consulta de información de cuenta
-    Consulta de coberturas por CP
-    Cotización por charola general, politica de ventas y por medidas
-    Generacíon de Guías
-      - Guías con confirmación 
-      - Confirmar Guía
-      - Cancelar Guía sin confirmar
-  termsOfService: http://swagger.io/terms/
+      - Consultar información del Cliente
+      - Consultar cobertura por CP, retornando información sobre tipo de servicios y costos extra
+      - Cotizar por charola general, charola de cliente y por medidas (Abierto)
+      - Realizar y consultar Envios
+      - Consultar Estatus de una guía en específico
+      - Obtener Acuse de Entrega de una guía en específico
+      - Obtener la etiqueta de envío para su impresión
+  termsOfService: https://portal.fletesdelsur.com/?s=terminos-condiciones
   contact:
     email: web@fletesdelsur.com
     url: https://fletesdelsur.com
   version: 1.0.1
 servers:
-  - url: http://ap1.pfsmx.app/api/v1
+  - url: https://ap1.pfsmx.app/api/v1
 tags:
   - name: Autentificación
     description: Se requiere un Token de Autentificación Bearer obtenido del Portal de Crédito de PFS. Este Token se deberá agregar en un Header para su autorización.
@@ -33,7 +33,39 @@ tags:
     description: Operaciones acerca de Envíos.
   - name: Firma
     description: Operaciones acerca de firma de comprobante de entrega.
+  - name: Imprimibles
+    description: Operaciones acerca de las etiquetas de enviós
 paths:
+  /imprimible/guia/{guia}:
+    get:
+      tags:
+        - Imprimibles
+      summary: Obtener la etiqueta de envío
+      description: Obtener la etiqueta de envío
+      operationId: getEtiqueta
+      parameters:
+        - name: guia
+          in: path
+          description: Guía
+          required: true
+          example: 2980731
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Consulta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documento'
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error_Auth'
+      security:
+        - Authorization: []
   /firma/{UUID}:
     get:
       tags:
@@ -75,8 +107,8 @@ paths:
     post:
       tags:
         - Envíos
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Realiza la documentación de un envío
+      description: Realiza la documentación de un envío, en el caso que se use 'Confirmacion true', se nececitará confirmar el envío. Si se usa 'Confirmacion false', retornará la guía
       operationId: postCotizador
       requestBody:
         description: Created user object
@@ -105,65 +137,13 @@ paths:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []  
-    put:
-      tags:
-        - Envíos
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
-      operationId: putCotizador
-      requestBody:
-        description: Created user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Envio_Put'
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Envio_Sin_Confirmacion' 
-        '401':
-          description: Error de autentificación
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error_Auth'  
-      security:
-        - Authorization: [] 
-    delete:
-      tags:
-        - Envíos
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
-      operationId: deleteCotizador
-      requestBody:
-        description: Created user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Envio_Put'
-      responses:
-        '410':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvioCancelado'          
-        '401':
-          description: Error de autentificación
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error_Auth'  
-      security:
-        - Authorization: [] 
+
+
     get:
       tags:
         - Envíos
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Regresa la información correspondiente de los envíos con los criterios ingresados
+      description: Regresa la información correspondiente de los envíos con los criterios ingresados
       operationId: getEnviofecha
       parameters:
         - name: fecha_ini
@@ -203,13 +183,70 @@ paths:
       security:
         - Authorization: []
 
-
+  /envio/{id}:
+    delete:
+      tags:
+        - Envíos
+      summary: Elimina un envío sin confirmar
+      description: Elimina un envío sin confirmar
+      operationId: deleteCotizador
+      parameters:
+        - name: id
+          in: path
+          description: Idenfificador de guía
+          required: true
+          schema:
+            type: integer
+      responses:
+        '410':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvioCancelado'          
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error_Auth'  
+      security:
+        - Authorization: [] 
+    put:
+      tags:
+        - Envíos
+      summary: Confirma el envío y retorna la guía
+      description: Confirma el envío y retorna la guía en el caso de que se realizará con 'Confirmacion true',
+      operationId: putCotizador
+      parameters:
+        - name: id
+          in: path
+          description: Idenfificador de guía
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio_Sin_Confirmacion' 
+        '401':
+          description: Error de autentificación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error_Auth'  
+      security:
+        - Authorization: [] 
+        
   /envio/{guia}:
     get:
       tags:
         - Envíos
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Regresa la información correspondiente al envío
+      description: Regresa la información correspondiente al envío
       operationId: getEnvio
       parameters:
         - name: guia
@@ -267,6 +304,7 @@ paths:
           in: path
           description: Código Postal
           required: true
+          example: 60190
           schema:
             type: integer
       responses:
@@ -290,14 +328,13 @@ paths:
     get:
       tags:
         - Cotizador
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Regresa la información de la charola de precios general
+      description: Regresa la información de la charola de precios general
       operationId: getCotizador
       parameters:
         - name: filtro
           in: query
           description: Filtro de charola
-          required: true
           schema:
             type: string
       responses:
@@ -319,8 +356,8 @@ paths:
     post:
       tags:
         - Cotizador
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Regresa la información ingresando cantidad y medidas
+      description: Regresa la información ingresando cantidad y medidas
       operationId: postCotizadorf
       requestBody:
         description: Created user object
@@ -349,8 +386,8 @@ paths:
     get:
       tags:
         - Cotizador
-      summary: Regresa la información correspondiente al Código Postal ingresado
-      description: Regresa la información correspondiente al Código Postal ingresado
+      summary: Regresa la información de la charola correspondiente al cliente
+      description: Regresa la información de la charola correspondiente al cliente
       operationId: getCotizadorpol
       parameters:
         - name: politica_venta
@@ -362,7 +399,6 @@ paths:
         - name: filtro
           in: query
           description: Filtro de charola
-          required: true
           schema:
             type: string
       responses:
@@ -661,12 +697,12 @@ components:
         Firma:
           type: string
           example: iVBORw0KGgoAAAANSUhEUgAAAfQAAAEkCAYAAADZ6MOlAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAABleSURBVHic7d1rcFT...
-    Envio_Put:
+    Documento:
       type: object
       properties:
-        id:
+        Documento:
           type: string
-          example: 9E1A1338-650E-47C1-9B3B-045CCE577B21
+          example: iVBORw0KGgoAAAANSUhEUgAAAfQAAAEkCAYAAADZ6MOlAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAABleSURBVHic7d1rcFT...
     Error_Auth:
       type: object
       properties:
@@ -831,4 +867,3 @@ components:
     Authorization:            # arbitrary name for the security scheme
       type: http
       scheme: bearer
-      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
