@@ -247,7 +247,7 @@ paths:
       description: Regresa la información correspondiente al envío
       operationId: getEnvio
       parameters:
-        - name: guia
+        - name: id
           in: path
           description: Guía
           required: true
