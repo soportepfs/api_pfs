@@ -240,8 +240,6 @@ paths:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: [] 
-        
-  /envio/{guia}:
     get:
       tags:
         - Envíos
@@ -269,7 +267,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
-        - Authorization: []
+        - Authorization: [] 
   /profile:
     get:
       tags:
