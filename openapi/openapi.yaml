@@ -240,34 +240,35 @@ paths:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: [] 
-    get:
-      tags:
-        - Envíos
-      summary: Regresa la información correspondiente al envío
-      description: Regresa la información correspondiente al envío
-      operationId: getEnvio
-      parameters:
-        - name: id
-          in: path
-          description: Guía
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Profile'          
-        '401':
-          description: Error de autentificación
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error_Auth'  
-      security:
-        - Authorization: [] 
+      get:
+        tags:
+          - Envíos
+        summary: Regresa la información correspondiente al envío
+        description: Regresa la información correspondiente al envío
+        operationId: getEnvio
+        parameters:
+          - name: id
+            in: path
+            description: Guía
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Profile'          
+          '401':
+            description: Error de autentificación
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error_Auth'  
+        security:
+          - Authorization: []
+        
   /profile:
     get:
       tags:
@@ -461,18 +462,18 @@ components:
         CantidadPaquetes:
           type: integer
           format: int64
-          example: 3
+          example: 1
         Observaciones:
           type: string
           example: Observaciones Prueba
-      xml:
-        name: envio
-    Paquetes:
+        Paquetes:
           type: array
           xml:
             wrapped: true
           items:
             $ref: '#/components/schemas/Paquete'
+      xml:
+        name: envio
     Rangos:
           type: array
           xml:
@@ -536,8 +537,8 @@ components:
           example: Zapatos
         ClaveProductoSAT:
           type: string
-          example: 01010101
-        ClaveClaveUnidadSATProductoSAT:
+          example: "01010101"
+        ClaveUnidadSAT:
           type: string
           example: X4G
         ValorDeclaradoUnitario:
