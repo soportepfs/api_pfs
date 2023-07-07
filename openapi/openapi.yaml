@@ -240,7 +240,7 @@ paths:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: [] 
-      get:
+    get:
         tags:
           - Envíos
         summary: Regresa la información correspondiente al envío
@@ -480,13 +480,6 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/Rango'
-
-    Paquetes:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Paquete'
     Rango:
       type: object
       properties:
