@@ -137,8 +137,6 @@ paths:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: []  
-
-
     get:
       tags:
         - Envíos
@@ -240,7 +238,7 @@ paths:
                 $ref: '#/components/schemas/Error_Auth'  
       security:
         - Authorization: [] 
-      get:
+    get:
         tags:
           - Envíos
         summary: Regresa la información correspondiente al envío
@@ -268,7 +266,6 @@ paths:
                   $ref: '#/components/schemas/Error_Auth'  
         security:
           - Authorization: []
-        
   /profile:
     get:
       tags:
